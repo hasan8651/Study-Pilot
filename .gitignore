@@ -12,7 +12,8 @@ dist
 dist-ssr
 *.local
 .env
-client
+.vercel
+firebase-admin-key.json
 
 # Editor directories and files
 .vscode/*

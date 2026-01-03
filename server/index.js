@@ -1,0 +1,122 @@
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
+
+const app = express();
+
+const port = process.env.PORT || 5000;
+
+app.use(cors());
+app.use(express.json());
+
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.vbonu5x.mongodb.net/?appName=Cluster0`;
+
+const client = new MongoClient(uri, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  },
+});
+
+app.get("/", (req, res) => {
+  res.send("Study Pilot server is running");
+});
+
+async function run() {
+  try {
+    // await client.connect();
+    const db = client.db("StudyPilot");
+    const coursesCollection = db.collection("courses");
+    const enrolledCollection = db.collection("enrolled-courses");
+
+    app.get("/courses", async (req, res) => {
+      const cursor = coursesCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.get("/popular-courses", async (req, res) => {
+      const isFeatured = req.query.isFeatured;
+      const result = await coursesCollection
+        .find({ isFeatured: true })
+        .limit(6)
+        .toArray();
+      res.send(result);
+    });
+
+    app.get("/courses/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await coursesCollection.findOne(query);
+      res.send(result);
+    });
+
+    app.get("/my-enrolled", async (req, res) => {
+      const cursor = enrolledCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
+
+    app.post("/courses", async (req, res) => {
+      const newCourse = req.body;
+      const result = await coursesCollection.insertOne(newCourse);
+      res.send(result);
+    });
+
+    app.post("/my-enrolled", async (req, res) => {
+      const enrolledtCourse = req.body;
+      const result = await enrolledCollection.insertOne(enrolledtCourse);
+      res.send(result);
+    });
+
+    app.put("/courses/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedCourse = req.body;
+      const course = {
+        $set: {
+          title: updatedCourse.title,
+          imageURL: updatedCourse.imageURL,
+          price: updatedCourse.price,
+          duration: updatedCourse.duration,
+          category: updatedCourse.category,
+          description: updatedCourse.description,
+          isFeatured: updatedCourse.isFeatured,
+          email: updatedCourse.email,
+        },
+      };
+      const result = await coursesCollection.updateOne(filter, course, options);
+      res.send(result);
+    });
+
+    app.delete("/courses/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await coursesCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    app.delete("/my-enrolled/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await enrolledCollection.deleteOne(query);
+      res.send(result);
+    });
+
+    // await client.db("admin").command({ ping: 1 });
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!"
+    );
+  } finally {
+  }
+}
+
+run().catch(console.dir);
+
+app.listen(port, () => {
+  console.log(`Study Pilot server is running on port: ${port}`);
+});
