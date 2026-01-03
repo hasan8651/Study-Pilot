@@ -16,7 +16,7 @@ const CourseDetails = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://study-pilot-server-three.vercel.app/courses/${id}`)
+      .get(`${import.meta.env.VITE_API_URL}/courses/${id}`)
       .then(({ data }) => {
         setCourse(data);
       })
@@ -41,7 +41,7 @@ const CourseDetails = () => {
 
     axios
       .post(
-        "https://study-pilot-server-three.vercel.app/my-enrolled",
+        `${import.meta.env.VITE_API_URL}/my-enrolled`,
         enrolledtCourse,
         {
           headers: { "Content-Type": "application/json" },

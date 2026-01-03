@@ -1,56 +1,74 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 @import "tailwindcss";
+@plugin "daisyui";
+
+/* ========== LIGHT THEME ========== */
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  /* Brand colors (max 3) */
+  --color-primary: #2563eb;   /* blue-600: main CTA, links */
+  --color-secondary: #38bdf8; /* sky-400: secondary buttons, chips */
+  --color-accent: #f97316;    /* orange-500: highlights, badges */
+
+  /* Neutrals */
+  --color-neutral: #0f172a;   /* slate-900 */
+  --color-base-100: #ffffff;  /* main surfaces */
+  --color-base-200: #f1f5f9;  /* page background (slate-100) */
+  --color-base-300: #e2e8f0;  /* borders (slate-200) */
+  --color-base-content: #0f172a; /* text color */
+}
+
+/* ========== DARK THEME ========== */
 @plugin "daisyui/theme" {
   name: "dark";
-  default: true;
-  --color-primary: #fff;
-  --color-secondary: #22d3ee;
-  --color-accent: #f472b6;
-  --color-neutral: #0b1220;
-  --color-base-100: #0b1220;
-  --color-base-200: #0b1220;
-  --color-base-300: #1f2937;
-  --color-base-content: #e5e7eb;
-}
-
-@plugin "daisyui" {
-  name: "light";
   default: false;
-  --color-primary: #4f46e5;
-  --color-secondary: #8b5cf6;
-  --color-accent: #06b6d4;
-  --color-neutral: #1f2937;
-  --color-base-100: #e9d5ff;
-  --color-base-200: #faf5ff;
-  --color-base-300: #e5e7eb;
-  --color-base-content: #1e3a8a;
+
+  /* Brand colors tuned for dark bg */
+  --color-primary: #60a5fa;   /* blue-400 */
+  --color-secondary: #22c55e; /* green-500: success/secondary */
+  --color-accent: #38bdf8;    /* sky-400 */
+  --color-neutral: #020617;   /* slate-950 */
+  --color-base-100: #020617;  /* main background */
+  --color-base-200: #020617;
+  --color-base-300: #1e293b;  /* slate-800 surfaces */
+  --color-base-content: #e2e8f0; /* text color */
 }
 
+
+/* DARK THEME gradients: subtle, deep academic look */
 [data-theme="dark"] {
-  --gradient-btn-from: #1e40af;
-  --gradient-btn-via: #9333ea;
-  --gradient-btn-to: #1e40af;
+  /* Button gradient: blue → teal */
+  --gradient-btn-from: #1d4ed8;  /* blue-700 */
+  --gradient-btn-via:  #38bdf8;  /* sky-400 */
+  --gradient-btn-to:   #1d4ed8;  /* blue-700 */
   --btn-text: #ffffff;
 
-  --gradient-section-from: #1e3a8a;
-  --gradient-section-via: #6b21a8;
-  --gradient-section-to: #1e3a8a;
-  --section-text: #ffffff;
+  /* Section/hero gradient: deep navy band */
+  --gradient-section-from: #020617; /* slate-950 */
+  --gradient-section-via:  #0f172a; /* slate-900 */
+  --gradient-section-to:   #1e293b; /* slate-800 */
+  --section-text: #e2e8f0;
 }
 
+/* LIGHT THEME gradients */
 [data-theme="light"] {
-  --gradient-btn-from: #22d3ee;
-  --gradient-btn-via: #8b5cf6;
-  --gradient-btn-to: #22d3ee;
-  --btn-text: #0b1220;
+  /* Button gradient: primary blue → sky */
+  --gradient-btn-from: #2563eb;  /* blue-600 */
+  --gradient-btn-via:  #3b82f6;  /* blue-500 */
+  --gradient-btn-to:   #38bdf8;  /* sky-400 */
+  --btn-text: #000000;
 
-  --gradient-section-from: #0ea5e9;
-  --gradient-section-via: #7c3aed;
-  --gradient-section-to: #0ea5e9;
+  /* Section/hero gradient: blue → cyan with white text */
+  --gradient-section-from: #1d4ed8; /* blue-700 */
+  --gradient-section-via:  #0ea5e9; /* sky-500 */
+  --gradient-section-to:   #312e81; /* indigo-900 */
   --section-text: #ffffff;
 }
 
+/* GRADIENT BUTTON */
 .btn-gradient {
   color: var(--btn-text);
   background-image: linear-gradient(
@@ -59,13 +77,16 @@
     var(--gradient-btn-via),
     var(--gradient-btn-to)
   );
-  transition: filter 0.2s ease, transform 0.2s ease;
+  transition: filter 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 10px 25px -15px rgba(15, 23, 42, 0.6);
 }
 .btn-gradient:hover {
   filter: brightness(1.06);
   transform: translateY(-1px);
+  box-shadow: 0 16px 35px -18px rgba(15, 23, 42, 0.8);
 }
 
+/* GRADIENT SECTION BACKGROUND */
 .section-gradient {
   color: var(--section-text);
   background-image: linear-gradient(
@@ -76,22 +97,27 @@
   );
 }
 
+/* ELEVATED CARD SURFACE */
 .card-surface {
   background: var(--color-base-100);
-  border: 1px solid color-mix(in oklab, var(--color-base-300), transparent 30%);
-  box-shadow: 0 10px 30px -15px color-mix(in oklab, var(--color-base-content), transparent
-        85%);
+  border: 1px solid
+    color-mix(in oklab, var(--color-base-300), transparent 30%);
+  box-shadow: 0 10px 30px -15px
+    color-mix(in oklab, var(--color-base-content), transparent 85%);
   border-radius: var(--radius-box);
-  transition: transform 0.25s ease, box-shadow 0.25s ease,
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
     border-color 0.25s ease;
 }
 .card-surface:hover {
   transform: translateY(-2px);
-  box-shadow: 0 16px 40px -18px color-mix(in oklab, var(--color-base-content), transparent
-        80%);
+  box-shadow: 0 16px 40px -18px
+    color-mix(in oklab, var(--color-base-content), transparent 80%);
   border-color: color-mix(in oklab, var(--color-primary), transparent 75%);
 }
 
+/* TYPOGRAPHY HELPERS */
 .heading-hero {
   @apply text-4xl md:text-5xl font-extrabold;
   color: var(--color-primary);
@@ -101,10 +127,11 @@
   color: var(--color-base-content);
 }
 
+
 .page-bg {
-  background: var(--color-base-200);
+  background-color: var(--color-base-200);
 }
 
 * {
-  font-family: "Inter", sans-serif;
+  font-family: "Poppins", sans-serif;
 }

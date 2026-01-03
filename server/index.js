@@ -42,7 +42,7 @@ async function run() {
       const isFeatured = req.query.isFeatured;
       const result = await coursesCollection
         .find({ isFeatured: true })
-        .limit(6)
+        .limit(8)
         .toArray();
       res.send(result);
     });

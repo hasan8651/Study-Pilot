@@ -101,7 +101,7 @@ const AddCourse = () => {
       };
 
       const { data } = await axios.post(
-        "https://study-pilot-server-three.vercel.app/courses",
+        `${import.meta.env.VITE_API_URL}/courses`,
         newCourse,
         { headers: { "Content-Type": "application/json" } }
       );

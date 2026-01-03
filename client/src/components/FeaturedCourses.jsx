@@ -9,7 +9,7 @@ const FeaturedCourses = () => {
  
   useEffect(() => {
     setLoading(true);
-    axios("https://study-pilot-server-three.vercel.app/popular-courses")
+    axios(`${import.meta.env.VITE_API_URL}/popular-courses`)
       .then((data) => setCourses(data.data))
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
@@ -26,7 +26,7 @@ const FeaturedCourses = () => {
           <LoadingSpinner />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {courses.map((course) => (
             <CourseCard key={course._id} course={course} />
           ))}

@@ -5,7 +5,7 @@ const CourseCard = ({ course }) => {
 
   return (
     <div data-aos="fade-up" className="group relative h-full">
-        <div className="absolute -inset-1px rounded-2xl bg-gradient-to-r from-primary/50 via-secondary/50 to-primary/50 opacity-50 blur-sm transition duration-500 group-hover:opacity-100 group-hover:blur-md" />
+        <div className="absolute -inset-1px rounded-2xl transition duration-500 group-hover:opacity-100 group-hover:blur-md" />
             <div className="relative h-full rounded-2xl card-surface shadow-lg ring-1 ring-base-200 p-4 flex flex-col transition-transform duration-300 group-hover:-translate-y-1">
                <figure className="relative  w-full overflow-hidden rounded-xl">
           <div className="aspect-video w-full overflow-hidden">

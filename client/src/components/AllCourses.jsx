@@ -13,7 +13,7 @@ const AllCourses = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get("https://study-pilot-server-three.vercel.app/courses")
+      .get(`${import.meta.env.VITE_API_URL}/courses`)
       .then(({ data }) => {
         setCourses(data);
         setFilteredCourses(data);
@@ -63,7 +63,7 @@ const AllCourses = () => {
           <LoadingSpinner />
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {filteredCourses.map((course) => (
             <CourseCard key={course._id} course={course} />
           ))}

@@ -23,7 +23,7 @@ const UpdateCourse = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`https://study-pilot-server-three.vercel.app/courses/${id}`)
+      .get(`${import.meta.env.VITE_API_URL}/courses/${id}`)
       .then(({ data }) => {
         setCourse(data);
         setSelectedCategory(data?.category || "");
@@ -101,7 +101,7 @@ const UpdateCourse = () => {
       };
 
       const { data } = await axios.put(
-        `https://study-pilot-server-three.vercel.app/courses/${course._id}`,
+        `${import.meta.env.VITE_API_URL}/courses/${course._id}`,
         updatedCourse,
         { headers: { "Content-Type": "application/json" } }
       );

@@ -16,7 +16,7 @@ const MyAddedCourse = () => {
     if (email) {
       setLoading(true);
       axios
-        .get("https://study-pilot-server-three.vercel.app/courses")
+        .get(`${import.meta.env.VITE_API_URL}/courses`)
         .then(({ data }) => {
           const filtered = data.filter((course) => course.email === email);
           setCourses(filtered);
@@ -42,7 +42,7 @@ const MyAddedCourse = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`https://study-pilot-server-three.vercel.app/courses/${id}`)
+          .delete(`${import.meta.env.VITE_API_URL}/courses/${id}`)
           .then(({ data }) => {
             if (data?.deletedCount > 0) {
               setCourses((prev) => prev.filter((course) => course._id !== id));
